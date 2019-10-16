@@ -1,5 +1,52 @@
 /* Your Code Here */
+let createEmployeeRecord = function(arr){
+    return {firstName: arr[0], familyName: arr[1], title: arr[2], payPerHour: arr[3], timeInEvents: [], timeOutEvents: []}
+}
 
+let createEmployeeRecords = function(arr){
+    return arr.map((emp) => createEmployeeRecord(emp))
+}
+
+let createEmployees = function(employeeRowData) {
+    return employeeRowData.map((e) => createEmployeeRecord(e))
+}
+
+
+let createTimeInEvent = function(dateStamp){
+    let [date, hour] = dateStamp.split(' ')
+    this.timeInEvents.push({ type: "TimeIn", hour: parseInt(hour, 10), date: date})
+
+    return this
+}
+
+let createTimeOutEvent = function(dateStamp){
+    let [date, hour] = dateStamp.split(' ')
+    this.timeOutEvents.push({ type: "TimeOut", hour: parseInt(hour, 10), date: date})
+
+    return this
+}
+
+
+let hoursWorkedOnDate = function(soughtDate){
+    let inEvent = this.timeInEvents.find((e) => e.date === soughtDate )
+
+    let outEvent = this.timeOutEvents.find((e) => e.date === soughtDate )
+
+    return (outEvent.hour - inEvent.hour) / 100
+}
+
+let wagesEarnedOnDate = function(dateSought){
+    let rawWage = hoursWorkedOnDate.call(this, dateSought) * this.payPerHour
+    return parseFloat(rawWage.toString())
+}
+
+let findEmployeebyFirstName = function(srcArray, firstName) {
+    return srcArray.find((rec) => rec.firstName === firstName)
+  }
+
+let calculatePayroll = function(arr){
+      return arr.reduce(((sum, rec) => sum + allWagesFor.call(rec)), 0)
+  }
 /*
  We're giving you this function. Take a look at it, you might see some usage
  that's new and different. That's because we're avoiding a well-known, but
